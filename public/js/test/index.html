@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+  "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <title>Jasmine Spec Runner</title>
+  <link rel="stylesheet" type="text/css" href="libs/jasmine.css">
+  <script type="text/javascript" src="../libs/require-2.1.5.min.js"></script>
+  <script type="text/javascript">
+  require.config({
+    baseUrl: "../",
+    urlArgs: "cache=" + Math.random(),
+    paths: {
+      // Core Libraries
+      // --------------
+      "modernizr": "libs/modernizr-2.6.2.min",
+      "jquery": "libs/jquery-1.9.1.min",
+      "underscore": "libs/underscore-1.4.4.min",
+      "backbone": "libs/backbone-0.9.10.min",
+      "jasmine": "test/libs/jasmine",
+      "jasmine-html": "test/libs/jasmine-html",
+      // Plugins
+      // --------------
+      "backbone.validateAll": "libs/plugins/backbone-validateAll-0.1.0",
+      "text": "libs/plugins/require-text-2.0.5",
+      "jasminejquery": "test/libs/jasmine-jquery",
+      // Application Folders
+      // -------------------
+      "collections": "app/collections",
+      "models": "app/models",
+      "routers": "app/routers",
+      "templates": "app/templates",
+      "views": "app/views"
+    },
+    shim: {
+      "jquery": ["modernizr"],
+      "jasminejquery": {
+        deps: ["jquery"]
+      },
+      "underscore": {
+        exports: "_"
+      },
+      "backbone": {
+        deps: ["underscore", "jquery"],
+        exports: "Backbone"
+      },
+      "jasmine": {
+        "exports": "jasmine"
+      },
+      "jasmine-html": {
+        "deps": ["jasmine"],
+        "exports": "jasmine"
+      },
+      "backbone.validateAll": ["backbone"]
+    }
+  });
+  require(["jquery", "backbone", "jasmine-html","backbone.validateAll"],
+    function($, Backbone, jasmine) {
+      specs = [];
+      specs.push("test/specs/helloSpec");
+      $(function() {
+        require(specs, function() {
+          jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+          jasmine.getEnv().execute();
+        });
+      });
+    }
+  );
+  </script>
+</head>
+<body>
+  <div id="sandbox" style="overflow: hidden; height: 1px;"></div>
+</body>
+</html>
