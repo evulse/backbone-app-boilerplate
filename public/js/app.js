@@ -5,7 +5,7 @@
   //  Tip: Set to true to turn on "production" mode
   var production = false,
   // Configuration object that will contain the correct prod/dev CSS and JavaScript files to load
-  config = {}
+  config = {};
   // Listen to the DOMContentLoaded Event (Supported in IE9+, Chrome Firefox, Safari)
   w.addEventListener("DOMContentLoaded", function() {
     // Mobile/Tablet Logic

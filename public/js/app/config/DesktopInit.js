@@ -5,7 +5,7 @@ require.config({
     // --------------
     "modernizr": "libs/modernizr-2.6.2.min",
     "jquery": "libs/jquery-1.9.1.min",
-    "underscore": "libs/underscore-1.4.4.min",
+    "underscore": "libs/lodash-1.0.1.min",
     "backbone": "libs/backbone-0.9.10.min",
 
     // Plugins
