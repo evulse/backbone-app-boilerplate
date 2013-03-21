@@ -1,11 +1,10 @@
-// View.js
-// -------
-define(["jquery", "backbone", "models/Model", "text!templates/hello.html"],
-  function($, Backbone, Model, template){
+// views/Auth.js
+// --------
+define(["jquery", "backbone", "helpers/Cookie", "text!templates/Auth/guest.html"],
+  function($, Backbone, Cookie, guest) {
 
-    var View = Backbone.View.extend({
-      // The DOM Element associated with this view
-      el: ".hello",
+    var Auth = Backbone.View.extend({
+      el: ".auth",
       // View constructor
       initialize: function() {
         // Calls the view's render method
@@ -18,7 +17,7 @@ define(["jquery", "backbone", "models/Model", "text!templates/hello.html"],
       // Renders the view's template to the UI
       render: function() {
         // Setting the view's template property using the Underscore template method
-        this.template = _.template(template, {});
+        this.template = _.template(guest, {});
         // Dynamically updates the UI with the view's template
         this.$el.html(this.template);
         // Maintains chainability
@@ -26,7 +25,6 @@ define(["jquery", "backbone", "models/Model", "text!templates/hello.html"],
       }
     });
 
-    // Returns the View class
-    return View;
+    return Auth;
   }
 );

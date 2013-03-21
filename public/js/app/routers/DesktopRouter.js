@@ -1,11 +1,11 @@
 // DesktopRouter.js
 // ----------------
-define(["jquery", "backbone", "models/Model", "views/View", "collections/Collection"],
-  function($, Backbone, Model, View, Collection) {
+define(["jquery", "backbone", "models/Model", "views/View", "views/Auth", "collections/Collection"],
+  function($, Backbone, Model, View, authView, Collection) {
     var DesktopRouter = Backbone.Router.extend({
       initialize: function() {
         // Tells Backbone to start watching for hashchange events
-        Backbone.history.start();
+        Backbone.history.start({pushState: true});
       },
       // All of your Backbone Routes (add more)
       routes: {
@@ -15,6 +15,7 @@ define(["jquery", "backbone", "models/Model", "views/View", "collections/Collect
       index: function() {
         // Instantiates a new view which will render the header text to the page
         new View();
+        new authView();
       }
     });
 

@@ -18,15 +18,19 @@
       "backbone": "libs/backbone-0.9.10.min",
       "jasmine": "test/libs/jasmine",
       "jasmine-html": "test/libs/jasmine-html",
+
       // Plugins
       // --------------
       "backbone.validateAll": "libs/plugins/backbone-validateAll-0.1.0",
       "text": "libs/plugins/require-text-2.0.5",
+      "jquery.cookie": "libs/plugins/jquery-cookie-1.3.1",
       "jasminejquery": "test/libs/jasmine-jquery",
+
       // Application Folders
       // -------------------
       "collections": "app/collections",
       "models": "app/models",
+      "helpers": "app/helpers",
       "routers": "app/routers",
       "templates": "app/templates",
       "views": "app/views"
@@ -50,13 +54,20 @@
         "deps": ["jasmine"],
         "exports": "jasmine"
       },
-      "backbone.validateAll": ["backbone"]
+      "backbone.validateAll": ["backbone"],
+      "jquery.cookie": ["jquery"]
     }
   });
-  require(["jquery", "backbone", "jasmine-html","backbone.validateAll"],
-    function($, Backbone, jasmine) {
+  require([
+    "jquery",
+    "backbone",
+    "jasmine-html",
+    "backbone.validateAll"
+  ], function($, Backbone, jasmine) {
       specs = [];
       specs.push("test/specs/helloSpec");
+      specs.push("test/specs/cookieSpec");
+      specs.push("test/specs/authSpec");
       $(function() {
         require(specs, function() {
           jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
