@@ -12,8 +12,11 @@ require.config({
     // Plugins
     // --------------
     "backbone.validateAll": "libs/plugins/backbone-validateAll-0.1.0",
+    "backbone.queryparams": "libs/plugins/backbone.queryparams",
+    "bootstrap": "libs/plugins/bootstrap-2.3.1.min",
     "text": "libs/plugins/require-text-2.0.5",
-    "jquery.cookie": "libs/plugins/jquery-cookie-1.3.1",
+    "json": "libs/JSON3-3.2.4.min",
+    "jquery.cookie": "libs/plugins/jquery-cookie",
 
     // Application Folders
     // -------------------
@@ -34,8 +37,10 @@ require.config({
       exports: "Backbone"
     },
     "backbone.validateAll": ["backbone"],
+    "backbone.queryparams": ["backbone"],
+    "bootstrap": ["jquery"],
     "helpers/auth": ["backbone"],
-    "jquery.cookie": ["jquery"]
+    "jquery.cookie": ["jquery","json"]
   }
 });
 
@@ -44,10 +49,11 @@ require([
     "backbone",
     "routers/DesktopRouter",
     "helpers/Cookie",
-    "backbone.validateAll"
+    "backbone.validateAll",
+    "bootstrap"
   ], function($, Backbone, DesktopRouter, Cookie) {
-    // Set cookies
-    Cookie.setDefaults();
-    // Instantiates a new Desktop Router instance
-    new DesktopRouter();
+      // Set cookies
+      Cookie.set_defaults();
+      // Instantiates a new Desktop Router instance
+      new DesktopRouter();
 });

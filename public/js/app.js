@@ -29,7 +29,7 @@
         // Loaded when not in production mode
         "dev-css": ["assets/css/bootstrap.css"],
         // Loaded when in production mode
-        "prod-css": ["css/libs/bootstrap.min.css"],
+        "prod-css": ["assets/css-min/bootstrap.css"],
         // Loaded when not in production mode
         "dev-js": [{ "data-main": "js/app/config/DesktopInit.js", "src": "js/libs/require-2.1.5.min.js" }],
         // Loaded when in production mode
@@ -43,7 +43,7 @@
           // Loaded when not in production mode
           "dev-css": ["assets/css/common.css"],
           // Loaded when in production mode
-          "prod-css": ["css/common.min.css"]
+          "prod-css": ["assets/css-min/common.css"]
         });
     });
     function loadCSS(urls, callback) {

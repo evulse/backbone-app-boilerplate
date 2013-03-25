@@ -16,7 +16,7 @@ Uh-oh. Don't get groggy the first time. I already put it inceptionally, so you'd
 So this is how it started.
 ========================
 
-Please read and use the '.editorconfig' file so we don't get tangled in different coding standard across platforms. Read [here](http://editorconfig.org/).
+Please read and use the `.editorconfig` file so we don't get tangled in different coding standard across platforms. Read [here](http://editorconfig.org/).
 
 ## Directories.
 - *assets* : CSS + Images. Nuff said.

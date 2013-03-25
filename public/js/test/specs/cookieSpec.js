@@ -1,14 +1,14 @@
-// View.js
+// cookieSpec.js
 // -------
 define(["jquery", "backbone", "helpers/Cookie", "jasminejquery"],
   function($, Backbone,Cookie){
 
-  describe("Cookie", function() {
+  describe("Cookies", function() {
 
     beforeEach(function(){
       this.cookie = Cookie;
-      this.cookie.destroy();
-      this.cookie.setDefaults();
+      this.cookie.destroy("all");
+      this.cookie.set_defaults();
     });
 
     describe("Defaults", function() {
@@ -16,26 +16,27 @@ define(["jquery", "backbone", "helpers/Cookie", "jasminejquery"],
         expect($.cookie.defaults.expires).toEqual(3);
         expect($.cookie.defaults.path).toEqual("/");
       });
+      it("should store raw data on JSON format", function(){
+        expect($.cookie.raw).toBeTruthy();
+        expect($.cookies().verify("auth")).toBeTruthy();
+      });
       it("should have default values", function() {
-        expect($.cookie("logged_in")).toBeDefined();
+        expect($.cookie().auth).toBeDefined();
       });
     });
 
     describe("Read & Write", function(){
       it("should be able to demolish traces",function(){
-        this.cookie.destroy();
+        this.cookie.destroy("all");
         expect($.cookie()).toEqual({"":""});
       });
-      it("should not write without proper key and value", function(){
-        this.cookie.set("random_key_123","proper value");
-        expect($.cookie("random_key_123")).toBeUndefined();
-        this.cookie.set("logged_in");
-        expect($.cookie("logged_in")).toEqual("no");
-        this.cookie.set("logged_in","proper value");
-        expect($.cookie("logged_in")).toEqual("proper value");
+      it("should write properly", function(){
+        expect($.cookies().read("auth","client_id")).toEqual("not_set");
+        $.cookies().replace("auth","client_id",true);
+        expect($.cookies().read("auth","client_id")).toBeTruthy();
       });
-      it("should read prorerly", function(){
-        expect(this.cookie.read("logged_in")).toEqual("no");
+      it("should read properly", function(){
+        expect($.cookies().read("auth","client_id")).toEqual("not_set");
       });
     });
 

@@ -1,4 +1,4 @@
-// Jasmine Unit Testing Suite
+// helloSpec.js
 // --------------------------
 define(["jquery", "backbone", "text!templates/hello.html", "views/View","models/Model", "collections/Collection", "routers/DesktopRouter", "jasminejquery"],
   function($, Backbone, headerText, View, Model, Collection, DesktopRouter, MobileRouter) {
@@ -61,9 +61,19 @@ define(["jquery", "backbone", "text!templates/hello.html", "views/View","models/
         // Instantiates a new Router instance
         this.router = new DesktopRouter();
         // Creates a Jasmine spy
-        this.routeSpy = jasmine.createSpy("home");
+        this.routeSpy = jasmine.createSpy("js/test");
         // When the route index method is called, the Jasmine spy is also called
         this.router.on("route:index", this.routeSpy);
+      });
+      it("should call the desktop router home method when there is no hash on the url", function() {
+        // Navigates to a different route
+        this.router.navigate("elsewhere");
+        // Navigates to the default route
+        this.router.navigate("", { trigger: true });
+        // Expects the Jasmine spy to have been called
+        expect(this.routeSpy).toHaveBeenCalled();
+        // Drive back to our test suites
+        this.router.navigate("js/test/");
       });
     }); // End of the Desktop Router test suite
 

@@ -10,30 +10,21 @@ define(["jquery", "backbone", "jquery.cookie"],
     $.cookie.raw = true;
 
     var cookie = {
-      "defaults": {
-        "logged_in": "no",
-        "client_id": null,
-        "code": null,
-        "client_secret": null
-      },
-      set: function(key,value){
-        var defaultkeys = [];
-        for(var defaultkey in this.defaults){ defaultkeys.push(defaultkey);}
-        if(_.indexOf(defaultkeys,key) !== -1 && (typeof(value) != "undefined" || value !== null)){
-          $.cookie(key,value);
+      set_defaults: function(){
+        if(!$.cookie().hasOwnProperty("auth")){
+          this.destroy("auth");
+          $.cookies().create("auth", {
+            "client_id": "not_set",
+            "code": "not_set",
+            "client_secret": "not_set"
+          });
         }
       },
-      read: function(key){
-        return($.cookie(key));
-      },
-      destroy: function(){
-        for(var key in $.cookie()){$.removeCookie(key);}
-      },
-      setDefaults: function(){
-        for(var key in this.defaults){
-          if(typeof($.cookie(key)) === "undefined" || $.cookie(key) === null) {
-            $.cookie(key, cookie.defaults[key]);
-          }
+      destroy: function(parts){
+        if(parts == "all"){
+          for(var key in $.cookie()){$.removeCookie(key);}
+        } else {
+          $.removeCookie(parts);
         }
       }
     };

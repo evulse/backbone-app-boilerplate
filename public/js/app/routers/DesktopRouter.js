@@ -1,25 +1,28 @@
 // DesktopRouter.js
 // ----------------
-define(["jquery", "backbone", "models/Model", "views/View", "views/Auth", "collections/Collection"],
-  function($, Backbone, Model, View, authView, Collection) {
+define(["jquery", "backbone", "models/Model", "views/View", "collections/Collection", "helpers/Cookie", "backbone.queryparams"],
+  function($, Backbone, Model, View, Collection) {
     var DesktopRouter = Backbone.Router.extend({
       initialize: function() {
-        // Tells Backbone to start watching for hashchange events
         Backbone.history.start({pushState: true});
       },
-      // All of your Backbone Routes (add more)
+      // All Routes
       routes: {
+        "redirect": "redirect",
         // When there is no hash on the url, the home method is called
         "": "index"
       },
       index: function() {
-        // Instantiates a new view which will render the header text to the page
         new View();
-        new authView();
+      },
+      redirect: function(params){
+        for(var key in params){
+          $.cookies().replace("auth", key, params[key]);
+        }
+        window.opener.location.reload();
+        window.close();
       }
     });
-
-    // Returns the DesktopRouter class
     return DesktopRouter;
   }
 );
