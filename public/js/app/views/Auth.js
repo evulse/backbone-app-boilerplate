@@ -14,12 +14,12 @@ define(["jquery", "backbone", "models/Auth", "helpers/Cookie", "text!templates/A
       configs: {
         access_token_name: "access_token",
         get_code : {
-          auth_url: "http://api.carted.com/dialog/authorize",
+          auth_url: "http://evulse-express-api.herokuapp.com/dialog/authorize",
           redirect_url: window.location.protocol + "//" + window.location.host + "/redirect",
           response_type: "code"
         },
         get_token : {
-          auth_url: "http://api.carted.com/oauth/token",
+          auth_url: "http://evulse-express-api.herokuapp.com/oauth/token",
           redirect_url: window.location.protocol + "//" + window.location.host + "/redirect",
           grant_type: "authorization_code",
           code: AuthModel.get("code"),

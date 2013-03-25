@@ -3,6 +3,7 @@ var lrSnippet = require('grunt-contrib-livereload/lib/utils').livereloadSnippet;
 var folderMount = function folderMount(connect, point) {
   return connect.static(path.resolve(point));
 };
+var modRewrite = require('connect-modrewrite');
 module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON("package.json"),
@@ -23,7 +24,15 @@ module.exports = function(grunt) {
       server: {
         options: {
           port: 9000,
-          base: "./public"
+          base: "./public",
+          middleware: function(connect, options) {
+            return [
+              modRewrite([
+                "!^(.*).(html|js|coffee|css|sass|scss|png|jpg|gif|ico|svg|eot|ttf|woff|otf) /index.html"
+              ]),
+              connect.static(options.base)
+            ];
+          }
         }
       },
       livereload: {

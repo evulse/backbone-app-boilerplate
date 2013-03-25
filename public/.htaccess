@@ -1,4 +1,4 @@
-# html5 pushstate (history) support:
+# html5 pushstate (history) support for Apache
 <ifModule mod_rewrite.c>
     RewriteEngine On
     RewriteCond %{REQUEST_FILENAME} !-f
