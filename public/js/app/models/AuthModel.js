@@ -2,7 +2,6 @@
 // --------
 define(["jquery", "backbone", "helpers/Validator"],
   function($, Backbone, Validator) {
-
     var AuthModel = Backbone.Model.extend({
       defaults: {
         "client_id": "not_set",

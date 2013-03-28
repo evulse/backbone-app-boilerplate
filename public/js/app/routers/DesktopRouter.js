@@ -1,7 +1,7 @@
 // DesktopRouter.js
 // ----------------
-define(["jquery", "backbone", "models/Model", "views/View", "collections/Collection", "helpers/Cookie", "backbone.queryparams"],
-  function($, Backbone, Model, View, Collection) {
+define(["jquery", "backbone", "views/HomeLayout", "backbone.queryparams"],
+  function($, Backbone, HomeLayout) {
     var DesktopRouter = Backbone.Router.extend({
       initialize: function() {
         Backbone.history.start({pushState: true});
@@ -13,7 +13,7 @@ define(["jquery", "backbone", "models/Model", "views/View", "collections/Collect
         "": "index"
       },
       index: function() {
-        new View();
+        new HomeLayout();
       },
       redirect: function(params){
         for(var key in params){

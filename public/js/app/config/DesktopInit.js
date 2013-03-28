@@ -25,6 +25,7 @@ require.config({
     "helpers": "app/helpers",
     "routers": "app/routers",
     "templates": "app/templates",
+    "layout": "app/templates/Layout",
     "views": "app/views"
   },
   shim: {
@@ -38,6 +39,32 @@ require.config({
     },
     "backbone.validateAll": ["backbone"],
     "backbone.queryparams": ["backbone"],
+    "bootstrap": "libs/plugins/bootstrap-2.3.1.min",
+    "text": "libs/plugins/require-text-2.0.5",
+    "json": "libs/JSON3-3.2.4.min",
+    "jquery.cookie": "libs/plugins/jquery-cookie",
+
+    // Application Folders
+    // -------------------
+    "collections": "app/collections",
+    "models": "app/models",
+    "helpers": "app/helpers",
+    "routers": "app/routers",
+    "templates": "app/templates",
+    "views": "app/views"
+  },
+  shim: {
+    "jquery": ["modernizr"],
+    "underscore": {
+      exports: "_"
+    },
+    "backbone": {
+      deps: ["underscore", "jquery"],
+      exports: "Backbone"
+    },
+    "backbone.validateAll": ["backbone"],
+    "backbone.queryparams": ["backbone"],
+    "backbone.layoutmanager": ["backbone"],
     "bootstrap": ["jquery"],
     "helpers/auth": ["backbone"],
     "jquery.cookie": ["jquery","json"]

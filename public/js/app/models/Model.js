@@ -1,9 +1,12 @@
-// Model.js
-// --------
+/**
+ * This is an example of a Model
+ * @class Model
+ * @extends Backbone.Model
+ * @constructor
+ * @return {Class} Model
+ */
 define(["jquery", "backbone"],
   function($, Backbone) {
-
-    // Creates a new Backbone Model class object
     var Model = Backbone.Model.extend({
       // Model Constructor
       initialize: function() {

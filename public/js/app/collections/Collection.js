@@ -1,17 +1,21 @@
-// Collection.js
-// -------------
+/**
+ * This is an example of a Collection
+ * @class Collection
+ * @extends Backbone.Collection
+ * @uses Model
+ * @constructor
+ * @param model {Class} Model to populate
+ * @return {Class} Collection
+ */
 define(["jquery","backbone","models/Model"],
   function($, Backbone, Model) {
-
-    // Creates a new Backbone Collection class object
     var Collection = Backbone.Collection.extend({
-
-      // Tells the Backbone Collection that all of it's models will be of type Model (listed up top as a dependency)
+      /**
+       * @property model
+       * @type Class
+       */
       model: Model
-
     });
-
-    // Returns the Model class
     return Collection;
   }
 );

@@ -1,12 +1,11 @@
 // views/Auth.js
 // --------
-define(["jquery", "backbone", "models/Auth", "helpers/Cookie", "text!templates/Auth/guest.html"],
-  function($, Backbone, Model, Cookie, guest) {
+define(["jquery", "backbone", "models/AuthModel", "helpers/Cookie", "text!templates/Auth/login.html"],
+  function($, Backbone, Auth, Cookie, login) {
 
-    var AuthModel = new Model();
-
+    var AuthModel = new Auth();
     var AuthView = Backbone.View.extend({
-      el: ".auth",
+      template: _.template(login, AuthModel.toJSON()),
       events: {
         "click .get-code": "getCode",
         "click .get-token": "getToken"
@@ -30,11 +29,18 @@ define(["jquery", "backbone", "models/Auth", "helpers/Cookie", "text!templates/A
           client_id: "c67f0160-7aad-4aa5-8a88-92bbd6f02a4c"
         }
       },
+      parseHash : function(hash) {
+        var params = {}, queryString = hash.substring(1), regex = /([^&=]+)=([^&]*)/g, m;
+        while (m == regex.exec(queryString)) {
+          params[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
+        }
+        return params;
+      },
       setupAuthUrl: function(options) {
         var url = this.configs[options].auth_url;
         //url += "?client_id=" + AuthModel.get("client_id");
         url += "?client_id=" + this.configs.test.client_id;
-        url += "&redirect_uri=" + this.configs[options].redirect_url;
+        url += "&redirect_uri=" + encodeURIComponent(this.configs[options].redirect_url);
         if (this.configs[options].client_secret) url += "&client_secret=" + this.configs[options].client_secret;
         if (this.configs[options].response_type) url += "&response_type=" + this.configs[options].response_type;
         if (this.configs[options].code) url += "&code=" + this.configs[options].code;
@@ -47,6 +53,7 @@ define(["jquery", "backbone", "models/Auth", "helpers/Cookie", "text!templates/A
         if (!this.configs.access_token_name) throw new Error("No access token name given.");
         if (!this.configs[options].auth_url) throw new Error("No auth url given.");
         if (!this.configs[options].redirect_url) throw new Error("No redirect url given.");
+        console.log(this.setupAuthUrl(options));
         this.dialog = window.open(this.setupAuthUrl(options),"_blank","width=400,height=500");
       },
       getCode: function(e){
@@ -57,11 +64,7 @@ define(["jquery", "backbone", "models/Auth", "helpers/Cookie", "text!templates/A
         e.preventDefault();
         this.auth("get_token");
       },
-      initialize: function() {
-        this.render();
-      },
       render: function() {
-        this.template = _.template(guest, AuthModel.toJSON());
         this.$el.html(this.template);
         return this;
       }
