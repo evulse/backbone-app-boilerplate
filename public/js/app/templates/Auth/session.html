@@ -1,0 +1,17 @@
+<% if ( code == "undefined" ) { %>
+<p>Code not set.</p>
+<% } else if ( access_token == "undefined") { %>
+<p>Access Token not set.</p>
+<form method="POST" action="http://localhost:5000/oauth/token" class=form>
+  <p>client_id : <input type="text" name="client_id" value="c67f0160-7aad-4aa5-8a88-92bbd6f02a4c"></p>
+  <p>grant_type : <input type="text" name="grant_type" value="authorization_code"></p>
+  <p>code : <input type="text" name="code" value="<%= code %>"></p>
+  <p>client_secret : <input type="text" name="client_secret" value="8638be31-2f91-479d-924a-3742feb17443"></p>
+  <p>redirect_uri : <input type="text" name="redirect_uri" value="http://localhost:9000/connect"></p>
+</form>
+<% } else if ( code !== "undefined" && access_token !== "undefined") { %>
+<p>Code &amp; Access token set.</p>
+<p>Code: <%= code %></p>
+<p>Token: <em><%= typeof(access_token) %></em></p>
+<p>Test <em>/say/Mike</em> : <em class="mike">...</em></p>
+<% } %>

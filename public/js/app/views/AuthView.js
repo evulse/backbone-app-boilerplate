@@ -1,71 +1,92 @@
 // views/Auth.js
 // --------
-define(["jquery", "backbone", "models/AuthModel", "helpers/Cookie", "text!templates/Auth/login.html"],
-  function($, Backbone, Auth, Cookie, login) {
+define(["jquery", "backbone", "models/AuthModel", "text!templates/Auth/session.html"],
+  function($, Backbone, Auth, AuthSessionHTML) {
 
     var AuthModel = new Auth();
     var AuthView = Backbone.View.extend({
-      template: _.template(login, AuthModel.toJSON()),
-      events: {
-        "click .get-code": "getCode",
-        "click .get-token": "getToken"
-      },
-      configs: {
+      el: ".main-layout",
+      config: {
         access_token_name: "access_token",
-        get_code : {
-          auth_url: "http://evulse-express-api.herokuapp.com/dialog/authorize",
-          redirect_url: window.location.protocol + "//" + window.location.host + "/redirect",
-          response_type: "code"
-        },
-        get_token : {
-          auth_url: "http://evulse-express-api.herokuapp.com/oauth/token",
-          redirect_url: window.location.protocol + "//" + window.location.host + "/redirect",
-          grant_type: "authorization_code",
-          code: AuthModel.get("code"),
-          //client_secret: AuthModel.get("client_secret")
-          client_secret: "8638be31-2f91-479d-924a-3742feb17443"
-        },
-        test: {
-          client_id: "c67f0160-7aad-4aa5-8a88-92bbd6f02a4c"
+        response_type: "code",
+        base: "http://localhost:5000/",
+        authorize_url: "dialog/authorize",
+        authorize_redirect_uri: window.location.protocol + "//" + window.location.host + "/connect",
+        token_auth_url: "oauth/token",
+        token_redirect_uri: window.location.protocol + "//" + window.location.host + "/connect",
+        client_secret: "8638be31-2f91-479d-924a-3742feb17443",
+        client_id: "c67f0160-7aad-4aa5-8a88-92bbd6f02a4c"
+      },
+      start: function(params) {
+        var that = this;
+        if (typeof(params) !== "undefined") {
+          AuthModel.save(params);
+          AuthModel.fetch();
+          that.start();
+        } else {
+          AuthModel.fetch();
+          if (AuthModel.get("code") == "undefined") {
+            that.getCode();
+          } else if (AuthModel.get("access_token") == "undefined"){
+            that.getToken();
+          } else {
+            that.testSay();
+          }
         }
       },
-      parseHash : function(hash) {
-        var params = {}, queryString = hash.substring(1), regex = /([^&=]+)=([^&]*)/g, m;
-        while (m == regex.exec(queryString)) {
-          params[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
-        }
-        return params;
+      getCode: function() {
+        var that = this;
+        this.render();
+        var c = that.config;
+        window.location.href = c.base + c.authorize_url + "?client_id=" + c.client_id + "&response_type=" + c.response_type + "&redirect_uri=" + encodeURIComponent(c.authorize_redirect_uri);
       },
-      setupAuthUrl: function(options) {
-        var url = this.configs[options].auth_url;
-        //url += "?client_id=" + AuthModel.get("client_id");
-        url += "?client_id=" + this.configs.test.client_id;
-        url += "&redirect_uri=" + encodeURIComponent(this.configs[options].redirect_url);
-        if (this.configs[options].client_secret) url += "&client_secret=" + this.configs[options].client_secret;
-        if (this.configs[options].response_type) url += "&response_type=" + this.configs[options].response_type;
-        if (this.configs[options].code) url += "&code=" + this.configs[options].code;
-        if (this.configs[options].grant_type) url += "&grant_type=" + this.configs[options].grant_type;
-        if (this.configs[options].scope) url += "&scope=" + this.configs[options].scope;
-        if (this.configs[options].state) url += "&state=" + this.configs[options].state;
-        return url;
+      getToken: function() {
+        this.render();
+        var that = this,
+            c = that.config;
+        $.ajax({
+          type: "POST",
+          url: c.base + c.token_auth_url,
+          data: {
+            client_id: c.client_id,
+            client_secret: c.client_secret,
+            grant_type: "authorization_code",
+            code: AuthModel.get("code"),
+            redirect_uri: c.token_redirect_uri
+          },
+          beforeSend: function(){
+            that.$el.append('<p class="status">Sending POST request</p>');
+          },
+          success: function(data) {
+            that.$el.find(".status").remove();
+            that.start(data);
+          },
+          error: function(data) {
+            that.$el.find(".status").remove();
+            console.log(data);
+          }
+        });
       },
-      auth: function(options) {
-        if (!this.configs.access_token_name) throw new Error("No access token name given.");
-        if (!this.configs[options].auth_url) throw new Error("No auth url given.");
-        if (!this.configs[options].redirect_url) throw new Error("No redirect url given.");
-        console.log(this.setupAuthUrl(options));
-        this.dialog = window.open(this.setupAuthUrl(options),"_blank","width=400,height=500");
-      },
-      getCode: function(e){
-        e.preventDefault();
-        this.auth("get_code");
-      },
-      getToken: function(e){
-        e.preventDefault();
-        this.auth("get_token");
+      testSay: function() {
+        var that = this;
+        that.render();
+        $.ajax({
+          url: that.config.base + "say/Mike.json?access_token="+AuthModel.get("access_token"),
+          success: function(data) {
+            console.log(data);
+            that.$el.find(".mike").text("Hello, "+ data.name);
+            that.$el.append("<p>This window will close in 3 seconds...</p>");
+            setTimeout(function(){
+              window.close();
+            },3000);
+          },
+          error: function(data) {
+            console.log(data);
+          }
+        });
       },
       render: function() {
-        this.$el.html(this.template);
+        this.$el.html(_.template(AuthSessionHTML,AuthModel.toJSON()));
         return this;
       }
     });

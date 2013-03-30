@@ -7,16 +7,14 @@ define(["jquery", "backbone", "jquery.cookie"],
       path: "/",
       expires: 3
     };
-    $.cookie.raw = true;
 
     var cookie = {
       set_defaults: function(){
         if(!$.cookie().hasOwnProperty("auth")){
           this.destroy("auth");
           $.cookies().create("auth", {
-            "client_id": "not_set",
-            "code": "not_set",
-            "client_secret": "not_set"
+            "code": "undefined",
+            "access_token": "undefined"
           });
         }
       },
