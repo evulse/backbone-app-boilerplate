@@ -1,7 +1,7 @@
 // Hello.js
 // -------
 define(["jquery", "backbone", "text!templates/Home/hello.html"],
-  function($, Backbone, HelloHTML, Auth){
+  function($, Backbone, HelloHTML){
 
     var HelloView = Backbone.View.extend({
       template: HelloHTML,
@@ -25,7 +25,7 @@ define(["jquery", "backbone", "text!templates/Home/hello.html"],
       }
     });
 
-    // Returns the View class
     return HelloView;
+
   }
 );

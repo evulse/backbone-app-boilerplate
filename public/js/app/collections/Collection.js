@@ -5,10 +5,10 @@
  * @uses Model
  * @constructor
  * @param model {Class} Model to populate
- * @return {Class} Collection
  */
 define(["jquery","backbone","models/Model"],
   function($, Backbone, Model) {
+
     var Collection = Backbone.Collection.extend({
       /**
        * @property model
@@ -16,6 +16,8 @@ define(["jquery","backbone","models/Model"],
        */
       model: Model
     });
+
     return Collection;
+
   }
 );

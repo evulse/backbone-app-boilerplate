@@ -49,13 +49,14 @@ module.exports = function(grunt) {
       "html + js": {
         files: [
           "./public/js/**/*.js",
+          "./public/**/*.css",
           "./public/**/*.html"
         ],
         tasks: ["livereload"]
       },
       scss: {
         files: "./public/assets/sass/*",
-        tasks: ["compass", "livereload"]
+        tasks: ["compass"]
       }
     }
   });

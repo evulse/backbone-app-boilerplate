@@ -1,7 +1,7 @@
 // helpers/Cookie.js
 // --------
-define(["jquery", "backbone", "jquery.cookie"],
-  function($, Backbone) {
+define(["jquery", "jquery.cookie"],
+  function($) {
 
     $.cookie.defaults = {
       path: "/",

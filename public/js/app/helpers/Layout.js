@@ -15,6 +15,7 @@ define(["jquery", "backbone"],
         });
       }
     });
+
     return Layout;
 
   }

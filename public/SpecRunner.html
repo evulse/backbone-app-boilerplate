@@ -3,30 +3,34 @@
 <html>
 <head>
   <title>Jasmine Spec Runner</title>
-  <link rel="stylesheet" type="text/css" href="libs/jasmine.css">
-  <script type="text/javascript" src="../libs/require-2.1.5.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="js/test/libs/jasmine.css">
+  <script type="text/javascript" src="js/libs/require-2.1.5.min.js"></script>
   <script type="text/javascript">
   require.config({
-    baseUrl: "../",
+    baseUrl: "./js/",
     urlArgs: "cache=" + Math.random(),
     paths: {
+      // Jasmine
+      "jasmine": "test/libs/jasmine",
+      "jasmine-html": "test/libs/jasmine-html",
+      "jasminejquery": "test/libs/jasmine-jquery",
+
       // Core Libraries
       // --------------
       "modernizr": "libs/modernizr-2.6.2.min",
       "jquery": "libs/jquery-1.9.1.min",
       "underscore": "libs/lodash-1.0.1.min",
       "backbone": "libs/backbone-0.9.10.min",
-      "jasmine": "test/libs/jasmine",
-      "jasmine-html": "test/libs/jasmine-html",
 
       // Plugins
       // --------------
       "backbone.validateAll": "libs/plugins/backbone-validateAll-0.1.0",
       "backbone.queryparams": "libs/plugins/backbone.queryparams",
+      "bootstrap": "libs/plugins/bootstrap-2.3.1.min",
       "text": "libs/plugins/require-text-2.0.5",
       "json": "libs/JSON3-3.2.4.min",
       "jquery.cookie": "libs/plugins/jquery-cookie",
-      "jasminejquery": "test/libs/jasmine-jquery",
+      "jquery.cookie": "libs/plugins/jquery-cookie",
 
       // Application Folders
       // -------------------
@@ -35,20 +39,11 @@
       "helpers": "app/helpers",
       "routers": "app/routers",
       "templates": "app/templates",
-      "views": "app/views"
+      "layout": "app/templates/Layout",
+      "views": "app/views",
+      "specs": "test/specs"
     },
     shim: {
-      "jquery": ["modernizr"],
-      "jasminejquery": {
-        deps: ["jquery"]
-      },
-      "underscore": {
-        exports: "_"
-      },
-      "backbone": {
-        deps: ["underscore", "jquery"],
-        exports: "Backbone"
-      },
       "jasmine": {
         "exports": "jasmine"
       },
@@ -56,32 +51,45 @@
         "deps": ["jasmine"],
         "exports": "jasmine"
       },
+      "jasminejquery" : ["jasmine","jquery"],
+      "jquery": ["modernizr"],
+      "underscore": {
+        exports: "_"
+      },
+      "backbone": {
+        deps: ["underscore", "jquery"],
+        exports: "Backbone"
+      },
       "backbone.validateAll": ["backbone"],
       "backbone.queryparams": ["backbone"],
+      "backbone.layoutmanager": ["backbone"],
+      "bootstrap": ["jquery"],
+      "helpers/auth": ["backbone"],
       "jquery.cookie": ["jquery","json"]
     }
   });
   require([
     "jquery",
     "backbone",
-    "jasmine-html",
-    "backbone.validateAll"
+    "jasmine-html"
   ], function($, Backbone, jasmine) {
+
       specs = [];
-      specs.push("test/specs/helloSpec");
-      specs.push("test/specs/cookieSpec");
-      specs.push("test/specs/authSpec");
+      specs.push("specs/modelsSpec");
+      specs.push("specs/helpersSpec");
+      specs.push("specs/routersSpec");
+
       $(function() {
         require(specs, function() {
           jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
           jasmine.getEnv().execute();
         });
       });
+
     }
   );
   </script>
 </head>
 <body>
-  <div id="sandbox" style="overflow: hidden; height: 1px;"></div>
 </body>
 </html>

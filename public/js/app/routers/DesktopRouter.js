@@ -20,6 +20,8 @@ define(["jquery", "backbone", "views/HomeLayout", "views/AuthView", "backbone.qu
         new AuthView().start(params);
       }
     });
+
     return DesktopRouter;
+
   }
 );

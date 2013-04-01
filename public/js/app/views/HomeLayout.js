@@ -10,6 +10,7 @@ define(["jquery", "backbone", "helpers/Layout", "views/HelloView", "text!layout/
         ".hello": new HelloView()
       }
     });
+
     return HomeLayout;
 
   }

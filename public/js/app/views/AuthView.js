@@ -4,6 +4,7 @@ define(["jquery", "backbone", "models/AuthModel", "text!templates/Auth/session.h
   function($, Backbone, Auth, AuthSessionHTML) {
 
     var AuthModel = new Auth();
+
     var AuthView = Backbone.View.extend({
       el: ".main-layout",
       config: {
@@ -42,8 +43,7 @@ define(["jquery", "backbone", "models/AuthModel", "text!templates/Auth/session.h
       },
       getToken: function() {
         this.render();
-        var that = this,
-            c = that.config;
+        var that = this, c = that.config;
         $.ajax({
           type: "POST",
           url: c.base + c.token_auth_url,
@@ -92,5 +92,6 @@ define(["jquery", "backbone", "models/AuthModel", "text!templates/Auth/session.h
     });
 
     return AuthView;
+
   }
 );

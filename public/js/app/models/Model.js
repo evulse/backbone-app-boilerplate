@@ -7,6 +7,7 @@
  */
 define(["jquery", "backbone"],
   function($, Backbone) {
+
     var Model = Backbone.Model.extend({
       // Model Constructor
       initialize: function() {
@@ -22,7 +23,7 @@ define(["jquery", "backbone"],
       }
     });
 
-    // Returns the Model class
     return Model;
+
   }
 );

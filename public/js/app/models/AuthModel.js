@@ -2,6 +2,7 @@
 // --------
 define(["jquery", "backbone", "helpers/Validator", "jquery.cookie"],
   function($, Backbone, Validator) {
+
     var AuthModel = Backbone.Model.extend({
       defaults: {
         "code": undefined,
@@ -19,7 +20,6 @@ define(["jquery", "backbone", "helpers/Validator", "jquery.cookie"],
       }
     });
 
-    // Returns the Model class
     return AuthModel;
   }
 );
