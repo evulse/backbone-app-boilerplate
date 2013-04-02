@@ -1,9 +1,13 @@
 {
     "name": "Backbone Boilerplate API",
-    "description": "Backbone Boilerplate API: a library for doing X, Y, and Z",
-    "version": "0.2",
+    "description": "Simple Backbone app that talks to the Express API",
+    "version": "0.3",
     "url": "https://github.com/evulse/backbone-app-boilerplate",
     "options": {
+        "paths": [
+          "./public/js/app"
+        ],
+        "themedir": "./docs/theme/not-so-yui",
         "outdir": "./docs"
     }
 }
