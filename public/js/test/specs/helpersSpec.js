@@ -4,8 +4,9 @@ define([
   "jquery",
   "backbone",
   "helpers/Cookie",
-  "helpers/Validator"
-  ], function($, Backbone,Cookie,Validator){
+  "helpers/Validator",
+  "helpers/Layout"
+  ], function($, Backbone, Cookie, Validator, Layout) {
 
   describe("Helpers", function() {
 
@@ -30,12 +31,12 @@ define([
         expect($.cookie().auth).toBeDefined();
       });
 
-      it("should be able to demolish traces",function(){
+      it("should be able to demolish traces",function() {
         this.cookie.destroy("all");
         expect($.cookie()).toEqual({"":""});
       });
 
-      it("should read and write properly", function(){
+      it("should read and write properly", function() {
         expect($.cookies().read("auth","code")).toEqual("undefined");
         $.cookies().replace("auth","code",true);
         expect($.cookies().read("auth","code")).toBeTruthy();
@@ -45,7 +46,7 @@ define([
 
     describe("Validator", function() {
 
-      beforeEach(function(){
+      beforeEach(function() {
         this.model = Backbone.Model.extend({
           validate: function(attrs) {
             var errors = this.errors = {};
@@ -71,6 +72,27 @@ define([
         });
         var b2 = new this.view({model:b1});
         expect(b1.errors.email).toBeUndefined();
+      });
+
+    });
+
+    describe("Layout",function() {
+
+      it("should render subviews on initialize", function() {
+        var view = Backbone.View.extend({
+          render: function() {
+            this.$el.html("Testing!");
+          }
+        });
+        var layout = Layout.extend({
+          el:".sandbox",
+          template: "<h1>Hello!</h1><p></p>",
+          subviews: {
+            "p": new view()
+          }
+        });
+        new layout();
+        expect($(".sandbox p").text()).toEqual("Testing!");
       });
 
     });
