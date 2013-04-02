@@ -93,6 +93,7 @@ define([
         });
         new layout();
         expect($(".sandbox p").text()).toEqual("Testing!");
+        $(".sandbox").html("");
       });
 
     });

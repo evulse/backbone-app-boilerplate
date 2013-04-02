@@ -1,8 +1,6 @@
-<% if ( code == "undefined" ) { %>
-<p>Code not set.</p>
-<% } else if ( access_token == "undefined") { %>
+<% if ( access_token == "undefined") { %>
 <p>Access Token not set.</p>
-<form method="POST" action="http://localhost:5000/oauth/token" class=form>
+<form>
   <p>client_id : <input type="text" name="client_id" value="c67f0160-7aad-4aa5-8a88-92bbd6f02a4c"></p>
   <p>grant_type : <input type="text" name="grant_type" value="authorization_code"></p>
   <p>code : <input type="text" name="code" value="<%= code %>"></p>
